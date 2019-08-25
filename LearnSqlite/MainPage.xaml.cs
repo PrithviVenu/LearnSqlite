@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -92,6 +93,50 @@ namespace LearnSqlite
             }
         }
     }
+    public class ItemViewModel1 : INotifyPropertyChangedBase
+    {
+        // Properties  
+        private string _manufacturer;
+        private string _model;
+        private string _color;
+        private int _year;
+
+        public string manufacturer
+        {
+            get { return _manufacturer; }
+
+            set { this.SetProperty(ref this._manufacturer, value); }
+        }
+
+        public string model
+        {
+            get { return _model; }
+
+            set { this.SetProperty(ref this._model, value); }
+        }
+
+        public string color
+        {
+            get { return _color; }
+
+            set { this.SetProperty(ref this._color, value); }
+        }
+
+        public int year
+        {
+            get { return _year; }
+
+            set { this.SetProperty(ref this._year, value); }
+        }
+
+
+        // Property Change Logic  
+
+
+
+
+
+    }
 
     public class Valuation
     {
@@ -117,13 +162,14 @@ namespace LearnSqlite
         {
             this.InitializeComponent();
             string path = Path.Combine(Windows.Storage.ApplicationData.
-  Current.LocalFolder.Path, "learn.db");
+    Current.LocalFolder.Path, "learn.db");
             var db = new SQLiteConnection(path);
 
             db.CreateTable<Stock>();
             db.CreateTable<Valuation>();
             db.CreateTable<Valuationn>();
             db.CreateTable<ItemViewModel>();
+            db.CreateTable<ItemViewModel1>();
 
 
 
