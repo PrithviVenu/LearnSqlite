@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,6 +28,69 @@ namespace LearnSqlite
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Symbol { get; set; }
+    }
+    public class ItemViewModel : INotifyPropertyChanged
+    {
+        // Properties  
+        private int _manufacturer;
+        private string _model;
+        private string _color;
+        private int _year;
+
+        [PrimaryKey, AutoIncrement]
+
+        public int manufacturer
+        {
+            get { return _manufacturer; }
+
+            set
+            {
+                _manufacturer = value;
+                NotifyPropertyChanged("manufacturer");
+            }
+        }
+
+        public string model
+        {
+            get { return _model; }
+
+            set
+            {
+                _model = value;
+                NotifyPropertyChanged("model");
+            }
+        }
+
+        public string color
+        {
+            get { return _color; }
+            set
+            {
+                _color = value;
+                NotifyPropertyChanged("color");
+            }
+        }
+
+        public int year
+        {
+            get { return _year; }
+            set
+            {
+                _year = value;
+                NotifyPropertyChanged("year");
+            }
+        }
+
+        // Property Change Logic  
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 
     public class Valuation
@@ -59,6 +123,7 @@ namespace LearnSqlite
             db.CreateTable<Stock>();
             db.CreateTable<Valuation>();
             db.CreateTable<Valuationn>();
+            db.CreateTable<ItemViewModel>();
 
 
 
