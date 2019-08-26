@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -161,18 +162,31 @@ namespace LearnSqlite
         public MainPage()
         {
             this.InitializeComponent();
+            Insert();
+
+
+        }
+        public async void Insert()
+        {
             string path = Path.Combine(Windows.Storage.ApplicationData.
-    Current.LocalFolder.Path, "learn.db");
-            var db = new SQLiteConnection(path);
+  Current.LocalFolder.Path, "learn.db");
+            var db = new SQLiteAsyncConnection(path);
 
-            db.CreateTable<Stock>();
-            db.CreateTable<Valuation>();
-            db.CreateTable<Valuationn>();
-            db.CreateTable<ItemViewModel>();
-            db.CreateTable<ItemViewModel1>();
+            await db.CreateTableAsync<Stock>();
+            await db.CreateTableAsync<Valuation>();
+            await db.CreateTableAsync<Valuationn>();
+            await db.CreateTableAsync<ItemViewModel>();
+            await db.CreateTableAsync<ItemViewModel1>();
+            var stock = new Stock()
+            {
+                Symbol = "AAPL"
+            };
 
+            await db.InsertAsync(stock);
 
+            await db.InsertAsync(new Valuationn());
 
+            Debug.WriteLine("Auto stock id: {0}", stock.Id);
         }
     }
 }
